@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 
-public class KFrame extends JFrame
+public class SSFrame extends JFrame
 {
 	boolean active = true, resize = false, suspend = false;
 	JPanel imgPane;
@@ -16,7 +16,7 @@ public class KFrame extends JFrame
 	Point click;
 	ArrayList<DrawnBox> boxes;
 
-	public KFrame(BufferedImage a)
+	public SSFrame(BufferedImage a)
 	{
 		boxes = new ArrayList<>();
 		original = a;
@@ -27,9 +27,9 @@ public class KFrame extends JFrame
 		{
 			public void paint(Graphics g)
 			{
-				g.drawImage(KFrame.this.current, 0, 0, null);
+				g.drawImage(SSFrame.this.current, 0, 0, null);
 				g.setColor(Color.RED);
-				for (DrawnBox db : KFrame.this.boxes)
+				for (DrawnBox db : SSFrame.this.boxes)
 				{
 					g.drawRect(db.x, db.y, db.w, db.h);
 					g.drawRect(db.x + 1, db.y + 1, db.w - 2, db.h - 2);
@@ -73,8 +73,8 @@ public class KFrame extends JFrame
 				{
 					if (inResizeBlock(e))
 					{
-						moveTo(KFrame.this.getX() + KFrame.this.getWidth(), KFrame.this.getY() + KFrame.this.getHeight(), true);
-						click = new Point(KFrame.this.getWidth(), KFrame.this.getHeight());
+						moveTo(SSFrame.this.getX() + SSFrame.this.getWidth(), SSFrame.this.getY() + SSFrame.this.getHeight(), true);
+						click = new Point(SSFrame.this.getWidth(), SSFrame.this.getHeight());
 					}
 					else click = e.getPoint();
 					if (e.isControlDown() && e.isAltDown()) saveImage();
@@ -105,7 +105,7 @@ public class KFrame extends JFrame
 						g.dispose();
 						current = temp;
 					}
-					KFrame.this.setSize(current.getWidth() + 4, current.getHeight() + 4);
+					SSFrame.this.setSize(current.getWidth() + 4, current.getHeight() + 4);
 					repaint();
 				}
 			}
@@ -118,12 +118,12 @@ public class KFrame extends JFrame
 				if (inResizeBlock(e))
 				{
 					resize = true;
-					KFrame.this.setCursor(new Cursor(Cursor.SE_RESIZE_CURSOR));
+					SSFrame.this.setCursor(new Cursor(Cursor.SE_RESIZE_CURSOR));
 				}
 				else
 				{
 					resize = false;
-					KFrame.this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+					SSFrame.this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 				}
 			}
 
@@ -142,7 +142,7 @@ public class KFrame extends JFrame
 				}
 				else if (click != null)
 				{
-					if (resize) KFrame.this.setSize(e.getX(), e.getY());
+					if (resize) SSFrame.this.setSize(e.getX(), e.getY());
 					else setLocation(e.getXOnScreen() - click.x, e.getYOnScreen() - click.y);
 				}
 			}

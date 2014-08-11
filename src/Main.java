@@ -16,7 +16,7 @@ public class Main
 	public static File ini = new File("SSViewer.ini");
 	public static int monitor = 0;
 	public static final byte MAX = 20;
-	private static final ArrayList<KFrame> kfs = new ArrayList<>();
+	private static final ArrayList<SSFrame> ssfs = new ArrayList<>();
 	public static boolean suspended = false;
     public static void main(String[] args) throws Exception
     {
@@ -106,7 +106,7 @@ public class Main
 						{
 				        	BufferedImage im = ImageIO.read(ss);
 				        	if (im != null)
-								add(new KFrame(im));
+								add(new SSFrame(im));
 						}
 				        ss.delete();
 			        }
@@ -119,46 +119,46 @@ public class Main
 	public static void toggle()
 	{
 		boolean anyHidden = false;
-		for (KFrame kf : kfs) if (kf.isActive())
+		for (SSFrame ssf : ssfs) if (ssf.isActive())
 		{
-			if (!kf.isVisible())
+			if (!ssf.isVisible())
 			{
-				kf.setVisible(true);
+				ssf.setVisible(true);
 				anyHidden = true;
 			}
-			else kf.toFront();
+			else ssf.toFront();
 		}
-		if (!anyHidden) for (KFrame kf : kfs) kf.setVisible(false);
+		if (!anyHidden) for (SSFrame ssf : ssfs) ssf.setVisible(false);
 	}
 
 	public static void saveAll()
 	{
-		for (KFrame kf : kfs) if (kf.isActive()) kf.saveImage();
+		for (SSFrame ssf : ssfs) if (ssf.isActive()) ssf.saveImage();
 	}
 
 	public static void activateAll()
 	{
-		for (KFrame kf : kfs) kf.activate();
+		for (SSFrame ssf : ssfs) ssf.activate();
 	}
 
-	public static void add(KFrame kf)
+	public static void add(SSFrame ssf)
 	{
-		MAIN: while (kfs.size() >= MAX)
+		MAIN: while (ssfs.size() >= MAX)
 		{
-			for (int i = kfs.size() - 1; i >= 0; ++i) if (kfs.get(i) != null && !kfs.get(i).isActive())
+			for (int i = ssfs.size() - 1; i >= 0; ++i) if (ssfs.get(i) != null && !ssfs.get(i).isActive())
 			{
-				kfs.remove(i);
+				ssfs.remove(i);
 				continue MAIN;
 			}
 			break;
 		}
 
-		kfs.add(kf);
+		ssfs.add(ssf);
 	}
 
-	public static void rem(KFrame kf)
+	public static void rem(SSFrame ssf)
 	{
-		if (kfs.size() > MAX) kfs.remove(kf);
+		if (ssfs.size() > MAX) ssfs.remove(ssf);
 	}
 
 	public static void loadIni()
